@@ -1,0 +1,9 @@
+name: Post
+version: ${project.version}
+main: com.github.gaoxusheng.post.Post
+authors: [Yun_Nan]
+api-version: 1.12.2
+commands:
+  post:
+    description: 发起一次post
+    permission-message: §2[post]§c 你也配？
