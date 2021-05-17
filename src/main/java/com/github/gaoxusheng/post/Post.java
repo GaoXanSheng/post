@@ -54,7 +54,9 @@ public final class Post extends JavaPlugin {
                 String var30 =((String)var18.get("CMD"));
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(),var30);
             }
-        }
+                   System.out.println("----POST插件异步任务完成-----");
+                   return;
+               }
 
             this.cancel();
                 }
