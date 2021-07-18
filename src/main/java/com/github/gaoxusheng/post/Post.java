@@ -3,8 +3,9 @@ package com.github.gaoxusheng.post;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
-
+import java.lang.String;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -37,12 +38,12 @@ public final class Post extends JavaPlugin {
                 @Override
                 public void run() {
                     Player player = (Player) sender;
-                    String[] var17 = new String[]{"curl", args[0] + "?player=" + player.getName() + "&world=" + player.getWorld().getName() + "&value=" + args[1], "-X", "POST", "-H", "\"Content-Type: application/x-www-form-urlencoded\"", "--data", args[1]};
+                    String[] var17 = new String[]{"curl", args[0] + "?player=" + player.getName() + "&world=" + player.getWorld().getName() + "&value=" + args[1], "-X", "POST", "-H", "\"Content-Type: application/x-www-form-urlencoded; charset=UTF-8\"", "--data", args[1]};
                     if (var17 != null) {
                         Map var18 = (Map) JSONValue.parse(execCurl(var17));
                         if (var18.containsKey("CMD")) {
                             String var30 = ((String) var18.get("CMD"));
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), var30);
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), GBKToUtf8(var30));
                         }
                         System.out.println("----POST插件异步任务完成-----");
                         return;
@@ -75,5 +76,11 @@ public final class Post extends JavaPlugin {
             return null;
         }
     }
-
+    public static String GBKToUtf8 (String value) {
+        try {
+            return new String( value.getBytes("GBK") , "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+    }
 }
