@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.lang.String;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -30,6 +29,7 @@ public final class Post extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         if (args.length <= 1) {
             return false;
         } else if (!(sender instanceof Player)) {
@@ -39,7 +39,7 @@ public final class Post extends JavaPlugin {
                 @Override
                 public void run() {
                     Player player = (Player) sender;
-                    String[] var17 = new String[]{"curl", args[0] + "?player=" + player.getName() + "&world=" + player.getWorld().getName() + "&value=" + args[1]+"value2=" + args[2],  "-X", "POST", "-H", "\"Content-Type: application/x-www-form-urlencoded; charset=UTF-8\"", "--data", args[1]};
+                    String[] var17 = new String[]{"curl", args[0] + "?player=" + player.getName() + "&world=" + player.getWorld().getName() + "&value=" + args[1], "-X", "POST", "-H", "\"Content-Type: application/x-www-form-urlencoded; charset=UTF-8\"", "--data", args[1]};
                     Map var18 = (Map) JSONValue.parse(execCurl(var17));
                     if (var18.containsKey("CMD")) {
                         String var30 = (GBKToUtf8((String) var18.get("CMD")));
@@ -72,16 +72,12 @@ public final class Post extends JavaPlugin {
             process.command("exit");
             return null;
         }
-
     }
-
-
-    public static String GBKToUtf8(String value) {
+    public static String GBKToUtf8 (String value) {
         try {
-            return new String(value.getBytes("GBK"), StandardCharsets.UTF_8);
+            return new String(value.getBytes("GBK") , StandardCharsets.UTF_8);
         } catch (UnsupportedEncodingException e) {
             return null;
         }
     }
-
 }
