@@ -40,7 +40,7 @@ public final class Post extends JavaPlugin {
                 @Override
                 public void run() {
                     Player player = (Player) sender;
-                    Map var18 = (Map) JSONValue.parse(doPost(args[0],player.getName(), player.getWorld(),args[1], player.getUniqueId(),player.getLevel()));
+                    Map var18 = (Map) JSONValue.parse(doPost(args[0],player.getName(), player.getWorld().getName(),args[1], player.getUniqueId(),player.getLevel()));
                     if (var18.containsKey("CMD")) {
                         String var30 = ((String) var18.get("CMD"));
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), var30);
@@ -52,7 +52,7 @@ public final class Post extends JavaPlugin {
         return true;
     }
 
-    public String doPost(String URL, String player, World world, String value , UUID UUID, int Level) {
+    public String doPost(String URL, String player, String world, String value , UUID UUID, int Level) {
         OutputStreamWriter out = null;
         BufferedReader in = null;
         StringBuilder result = new StringBuilder();
