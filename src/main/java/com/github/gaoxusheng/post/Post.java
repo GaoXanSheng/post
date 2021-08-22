@@ -1,21 +1,20 @@
 package com.github.gaoxusheng.post;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.lang.String;
-
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.JSONValue;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
 
 /**
  * @author Yun_Nan
@@ -41,9 +40,9 @@ public final class Post extends JavaPlugin {
                 @Override
                 public void run() {
                     Player player = (Player) sender;
-                    Map var18 = (Map) JSONValue.parse(doPost(args[0],player.getName(), String.valueOf(player.getWorld()),args[1]));
+                    Map var18 = (Map) JSONValue.parse(doPost(args[0],player.getName(), player.getWorld(),args[1], player.getUniqueId(),player.getLevel()));
                     if (var18.containsKey("CMD")) {
-                        String var30 = (GBKToUtf8((String) var18.get("CMD")));
+                        String var30 = ((String) var18.get("CMD"));
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), var30);
                     }
                     System.out.println("----POST插件异步任务完成-----");
@@ -53,7 +52,7 @@ public final class Post extends JavaPlugin {
         return true;
     }
 
-    public String doPost(String URL,String player,String world, String value) {
+    public String doPost(String URL, String player, World world, String value , UUID UUID, int Level) {
         OutputStreamWriter out = null;
         BufferedReader in = null;
         StringBuilder result = new StringBuilder();
@@ -72,7 +71,7 @@ public final class Post extends JavaPlugin {
             conn.setRequestProperty("Accept", "application/json");
             //获取输出流
             out = new OutputStreamWriter(conn.getOutputStream());
-            String jsonStr = "{\"player_name\":\""+player+"\", \"world\":\""+world+"\", \"value\":\""+value+"\"}";
+            String jsonStr = "{\"player\":\""+player+"\", \"world\":\""+world+"\", \"value\":\""+value+"\",\"UUID\":\""+UUID+"\",\"Level\":\""+Level+"\"}";
             out.write(jsonStr);
             out.flush();
             out.close();
@@ -101,13 +100,5 @@ public final class Post extends JavaPlugin {
             }
         }
         return result.toString();
-    }
-
-    public static String GBKToUtf8(String value) {
-        try {
-            return new String(value.getBytes("GBK"), StandardCharsets.UTF_8);
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
     }
 }
