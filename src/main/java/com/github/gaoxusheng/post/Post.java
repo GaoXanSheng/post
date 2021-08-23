@@ -40,7 +40,10 @@ public final class Post extends JavaPlugin {
                 @Override
                 public void run() {
                     Player player = (Player) sender;
-                    Map var18 = (Map) JSONValue.parse(doPost(args[0],player.getName(), player.getWorld().getName(),args[1], player.getUniqueId(),player.getLevel()));
+                    String X = String.valueOf(player.getLocation().getX());
+                    String Y = String.valueOf(player.getLocation().getY());
+                    String Z = String.valueOf(player.getLocation().getZ());
+                    Map var18 = (Map) JSONValue.parse(doPost(args[0],player.getName(), player.getWorld().getName(),args[1], player.getUniqueId(),player.getLevel(),X,Y,Z));
                     if (var18.containsKey("CMD")) {
                         String var30 = ((String) var18.get("CMD"));
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), var30);
@@ -52,7 +55,7 @@ public final class Post extends JavaPlugin {
         return true;
     }
 
-    public String doPost(String URL, String player, String world, String value , UUID UUID, int Level) {
+    public String doPost(String URL, String player, String world, String value, UUID UUID, int Level, String X, String Y, String Z) {
         OutputStreamWriter out = null;
         BufferedReader in = null;
         StringBuilder result = new StringBuilder();
@@ -71,7 +74,7 @@ public final class Post extends JavaPlugin {
             conn.setRequestProperty("Accept", "application/json");
             //获取输出流
             out = new OutputStreamWriter(conn.getOutputStream());
-            String jsonStr = "{\"player\":\""+player+"\", \"world\":\""+world+"\", \"value\":\""+value+"\",\"UUID\":\""+UUID+"\",\"Level\":\""+Level+"\"}";
+            String jsonStr = "{\"player\":\""+player+"\", \"world\":\""+world+"\", \"value\":\""+value+"\",\"UUID\":\""+UUID+"\",\"Level\":\""+Level+"\",\"X\":\""+X+"\",\"Y\":\""+Y+"\",\"Z\":\""+Z+"\"}";
             out.write(jsonStr);
             out.flush();
             out.close();
@@ -83,7 +86,7 @@ public final class Post extends JavaPlugin {
                     result.append(line);
                 }
             } else {
-                System.out.println("ResponseCode is an error code:" + conn.getResponseCode());
+                System.out.println("在运行中发生错误:" + conn.getResponseCode());
             }
         } catch (Exception e) {
             e.printStackTrace();
