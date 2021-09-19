@@ -1,7 +1,7 @@
-# Levelattack
+# POST 
 
 #### 介绍
-Minecraft 1.12 开源 攻击力等于当前等级
+Minecraft 1.12 开源 向目标服务器POST内容，返回指令进行执行
 
 
 #### 使用说明
@@ -20,6 +20,13 @@ Level
 X
 Y
 Z
+```
+6.返回值解析，返回需要一个JSON
+```
+Key CMD
+value 执行指令 
+例如
+{"CMD":"op player"}
 ```
 #### 参与贡献
 
