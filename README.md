@@ -1,15 +1,31 @@
-use?
-/post url json
+# Levelattack
 
-how? 
-post build
+#### 介绍
+Minecraft 1.12 开源 攻击力等于当前等级
 
-to All
 
-"Content-Type", "application/json"
+#### 使用说明
 
-player = player_name
-world = player_world_name
-value = player add value
-UUID = player UUID
-Level = player Level
+1.  构建项目
+2.  放入plugins文件夹
+3.  /post url value
+4. 指定协议"Content-Type", "application/json"
+5. POST 内容 
+```
+player
+world
+value
+UUID
+Level
+X
+Y
+Z
+```
+#### 参与贡献
+
+1.  Fork 本仓库
+2.  新建 Feat_xxx 分支
+3.  提交代码
+4.  新建 Pull Request
+
+
